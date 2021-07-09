@@ -11,7 +11,8 @@ class Settings:
         self._screen_width = 1200
         self._screen_height = 800
         self._screen_dimensions = (self.screen_width, self.screen_height)
-        self._background_color = (0, 0, 0)
+        self._channel_value = 0
+        self._background_color = (self.channel_value, self.channel_value, self.channel_value)
 
     @property
     def screen_width(self):
@@ -27,6 +28,11 @@ class Settings:
     def screen_dimensions(self):
         """tuple[int, int]: The pixel width and height of the screen, respectively."""
         return self._screen_dimensions
+
+    @property
+    def channel_value(self):
+        """int: The value for each RGB channel."""
+        return self._channel_value
 
     @property
     def background_color(self):
