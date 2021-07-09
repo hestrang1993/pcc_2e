@@ -13,6 +13,7 @@ class Settings:
         self._screen_dimensions = (self.screen_width, self.screen_height)
         self._channel_value = 0
         self._background_color = (self.channel_value, self.channel_value, self.channel_value)
+        self._ship_speed = 1.5
 
     @property
     def screen_width(self):
@@ -38,3 +39,8 @@ class Settings:
     def background_color(self):
         """tuple[int, int, int]: The background color for the game window."""
         return self._background_color
+
+    @property
+    def ship_speed(self):
+        """float: The horizontal speed of the player."""
+        return self._ship_speed
