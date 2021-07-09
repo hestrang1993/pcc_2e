@@ -6,6 +6,7 @@ import sys
 
 import pygame
 
+from chapter_12.my_game.my_ship import Ship
 from chapter_12.my_game.settings import Settings
 
 
@@ -23,6 +24,7 @@ class AlienInvasion:
         self._caption_string = "Alien Invasion!"
         self.screen = pygame.display.set_mode(self.settings.screen_dimensions)
         pygame.display.set_caption(self.caption_string)
+        self.ship = Ship(self)
 
     @property
     def caption_string(self):
@@ -47,10 +49,16 @@ class AlienInvasion:
     def run_game(self):
         """
         Start the main loop for the game.
+
+        Returns
+        -------
+        None
         """
-        self._watch_for_keyboard_and_mouse_events()
-        self.screen.fill(self.settings.background_color)
-        pygame.display.flip()
+        while True:
+            self._watch_for_keyboard_and_mouse_events()
+            self.screen.fill(self.settings.background_color)
+            self.ship.blit_me()
+            pygame.display.flip()
 
 
 def main():
