@@ -46,6 +46,18 @@ class AlienInvasion:
             if event.type == pygame.QUIT:
                 sys.exit()
 
+    def _update_the_screen(self):
+        """
+        Update the screen periodically.
+
+        Returns
+        -------
+        None
+        """
+        self.screen.fill(self.settings.background_color)
+        self.ship.blit_me()
+        pygame.display.flip()
+
     def run_game(self):
         """
         Start the main loop for the game.
@@ -56,9 +68,7 @@ class AlienInvasion:
         """
         while True:
             self._watch_for_keyboard_and_mouse_events()
-            self.screen.fill(self.settings.background_color)
-            self.ship.blit_me()
-            pygame.display.flip()
+            self._update_the_screen()
 
 
 def main():
