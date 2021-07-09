@@ -6,6 +6,8 @@ import sys
 
 import pygame
 
+from chapter_12.my_game.settings import Settings
+
 
 class AlienInvasion:
     """
@@ -17,8 +19,17 @@ class AlienInvasion:
         Create a new instance of :class:`AlienInvasion`.
         """
         pygame.init()
-        self.screen_dimension = (1200, 800)
-        self.screen = pygame.display.set_mode(self.screen_dimension)
+        self.settings = Settings()
+        self._caption_string = "Alien Invasion!"
+        self.screen = pygame.display.set_mode(self.settings.screen_dimensions)
+        pygame.display.set_caption(self.caption_string)
+
+    @property
+    def caption_string(self):
+        """
+        str: The caption for the game window.
+        """
+        return self._caption_string
 
     @staticmethod
     def _watch_for_keyboard_and_mouse_events():
@@ -38,6 +49,7 @@ class AlienInvasion:
         Start the main loop for the game.
         """
         self._watch_for_keyboard_and_mouse_events()
+        self.screen.fill(self.settings.background_color)
         pygame.display.flip()
 
 
