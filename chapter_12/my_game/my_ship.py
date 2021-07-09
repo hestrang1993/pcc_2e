@@ -23,6 +23,10 @@ class Ship:
         """
         pygame.Surface: The screen to display the game on.
         """
+        self.ship_settings = alien_invasion.settings
+        """
+        chapter_12.my_game.settings.Settings: An attribute that accesses the ship's settings from the Settings module.
+        """
         self.screen_rectangle = alien_invasion.screen.get_rect()
         """
         pygame.Rect: The rectangle for the game window.
@@ -37,6 +41,9 @@ class Ship:
         pygame.Rect: The rectangle for the image that will serve as the player's ship.'
         """
         self.image_rectangle.midbottom = self.screen_rectangle.midbottom
+        self._moving_right = False
+        self._moving_left = False
+        self._ship_x = float(self.image_rectangle.x)
 
     @property
     def ship_image_file_path(self):
@@ -44,6 +51,73 @@ class Ship:
         str: The file path to the image that will serve as the player's ship.
         """
         return self._ship_image_file_path
+
+    @property
+    def moving_right(self):
+        """
+        bool: The flag for whether the player is moving right.
+        """
+        return self._moving_right
+
+    @moving_right.setter
+    def moving_right(self, flag):
+        self._moving_right = flag
+
+    @property
+    def moving_left(self):
+        """
+        bool: The flag for whether the player is moving left.
+        """
+        return self._moving_left
+
+    @moving_left.setter
+    def moving_left(self, flag):
+        self._moving_left = flag
+
+    @property
+    def ship_x(self):
+        """
+        float: The x-position of the player's ship.
+        """
+        return self._ship_x
+
+    @ship_x.setter
+    def ship_x(self, new_position):
+        self._ship_x = new_position
+
+    def _move_ship_right(self):
+        """
+        Move the ship right on the screen until it hits the right edge of the screen.
+
+        Returns
+        -------
+        None
+        """
+        if self.moving_right and self.image_rectangle.right < self.screen_rectangle.right:
+            self.ship_x += self.ship_settings.ship_speed
+
+    def _move_ship_left(self):
+        """
+        Move the ship left on the screen until it hits the left edge of the screen.
+
+        Returns
+        -------
+        None
+        """
+        if self.moving_left and self.image_rectangle.left > 0:
+            self.ship_x -= self.ship_settings.ship_speed
+
+    def move_ship(self):
+        """
+        Move the ship left or right continuously until the player hits the edge of the screen.
+
+        Returns
+        -------
+        None
+        """
+        self._move_ship_right()
+        self._move_ship_left()
+        self.image_rectangle = self.ship_x
 
     def blit_me(self):
         """
