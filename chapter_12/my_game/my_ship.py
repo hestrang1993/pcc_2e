@@ -32,17 +32,17 @@ class Ship:
         pygame.Rect: The rectangle for the game window.
         """
         self._ship_image_file_path = 'images/background.png'
-        self.image = pygame.image.load("images/background.png")
+        self.ship_image = pygame.image.load("images/background.png")
         """
-        pygame.Surface: The image of the player's ship.
+        pygame.Surface: The ship_image of the player's ship.
         """
-        self.image_rectangle = self.image.get_rect()
+        self.ship_rectangle = self.ship_image.get_rect()
         """
-        pygame.Rect: The rectangle for the image that will serve as the player's ship.'
+        pygame.Rect: The rectangle for the ship_image that will serve as the player's ship.'
         """
-        self.image_rectangle.midbottom = self.screen_rectangle.midbottom
+        self.ship_rectangle.midbottom = self.screen_rectangle.midbottom
 
-        self._ship_x = float(self.image_rectangle.x)
+        self._ship_x = float(self.ship_rectangle.x)
 
         self._moving_right = False
         self._moving_left = False
@@ -50,7 +50,7 @@ class Ship:
     @property
     def ship_image_file_path(self):
         """
-        str: The file path to the image that will serve as the player's ship.
+        str: The file path to the ship_image that will serve as the player's ship.
         """
         return self._ship_image_file_path
 
@@ -95,7 +95,7 @@ class Ship:
         -------
         None
         """
-        if self.moving_right and self.image_rectangle.right < self.screen_rectangle.right:
+        if self.moving_right and self.ship_rectangle.right < self.screen_rectangle.right:
             self.ship_x += self.ship_settings.ship_speed
 
     def _move_ship_left(self):
@@ -106,7 +106,7 @@ class Ship:
         -------
         None
         """
-        if self.moving_left and self.image_rectangle.left > 0:
+        if self.moving_left and self.ship_rectangle.left > 0:
             self.ship_x -= self.ship_settings.ship_speed
 
     def move_ship(self):
@@ -119,7 +119,7 @@ class Ship:
         """
         self._move_ship_right()
         self._move_ship_left()
-        self.image_rectangle.x = self.ship_x
+        self.ship_rectangle.x = self.ship_x
 
     def blit_me(self):
         """
@@ -129,4 +129,4 @@ class Ship:
         -------
         None
         """
-        self.screen.blit(self.image, self.image_rectangle)
+        self.screen.blit(self.ship_image, self.ship_rectangle)
