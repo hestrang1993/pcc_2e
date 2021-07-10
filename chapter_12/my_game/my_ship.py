@@ -41,9 +41,11 @@ class Ship:
         pygame.Rect: The rectangle for the image that will serve as the player's ship.'
         """
         self.image_rectangle.midbottom = self.screen_rectangle.midbottom
+
+        self._ship_x = float(self.image_rectangle.x)
+
         self._moving_right = False
         self._moving_left = False
-        self._ship_x = float(self.image_rectangle.x)
 
     @property
     def ship_image_file_path(self):
@@ -117,7 +119,7 @@ class Ship:
         """
         self._move_ship_right()
         self._move_ship_left()
-        self.image_rectangle = self.ship_x
+        self.image_rectangle.x = self.ship_x
 
     def blit_me(self):
         """
