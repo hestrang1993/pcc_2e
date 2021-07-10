@@ -22,7 +22,9 @@ class AlienInvasion:
         pygame.init()
         self.settings = Settings()
         self._caption_string = "Alien Invasion!"
-        self.screen = pygame.display.set_mode(self.settings.screen_dimensions)
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        self.settings.screen_width = self.screen.get_rect().width
+        self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption(self.caption_string)
         self.ship = Ship(self)
 
@@ -33,8 +35,50 @@ class AlienInvasion:
         """
         return self._caption_string
 
-    @staticmethod
-    def _watch_for_keyboard_and_mouse_events():
+    def _check_key_down_events(self, event):
+        """
+        Handle when the arrow keys and the Q key are pressed down.
+
+        Pressing the arrow keys will move the player ship left or right.
+        Pressing the Q key will quit the game.
+
+        Parameters
+        ----------
+        event : pygame.event.Event
+            The pygame handler for specific keyboard events.
+
+        Returns
+        -------
+        None
+        """
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = True
+        elif event.key == pygame.K_q:
+            sys.exit()
+
+    def _check_key_up_events(self, event):
+        """
+        Handle when the arrow keys and the Q key are released.
+
+        Releasing the arrow keys will stop the player ship from moving left or right.
+
+        Parameters
+        ----------
+        event : pygame.event.Event
+            The pygame handler for specific keyboard events.
+
+        Returns
+        -------
+        None
+        """
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = False
+        if event.key == pygame.K_LEFT:
+            self.ship.moving_left = False
+
+    def _check_events(self):
         """
         Watch for keyboard and mouse events that will exit the game.
 
@@ -45,6 +89,10 @@ class AlienInvasion:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                self._check_key_down_events(event)
+            elif event.type == pygame.KEYUP:
+                self._check_key_up_events(event)
 
     def _update_the_screen(self):
         """
@@ -67,7 +115,8 @@ class AlienInvasion:
         None
         """
         while True:
-            self._watch_for_keyboard_and_mouse_events()
+            self._check_events()
+            self.ship.move_ship()
             self._update_the_screen()
 
 
