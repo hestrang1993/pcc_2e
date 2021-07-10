@@ -20,10 +20,18 @@ class Settings:
         """int: The pixel width of the screen."""
         return self._screen_width
 
+    @screen_width.setter
+    def screen_width(self, width):
+        self._screen_width = width
+
     @property
     def screen_height(self):
         """int: The pixel height of the screen."""
         return self._screen_height
+
+    @screen_height.setter
+    def screen_height(self, height):
+        self._screen_height = height
 
     @property
     def screen_dimensions(self):
