@@ -131,7 +131,7 @@ class AlienInvasion:
     def _update_bullets_on_screen(self):
         self.bullets.update()
         for bullet in self.bullets.copy():
-            if bullet.rect.bottom <= 0:
+            if bullet.bullet_rectangle.bottom <= 0:
                 self.bullets.remove(bullet)
 
     def _update_the_screen(self):

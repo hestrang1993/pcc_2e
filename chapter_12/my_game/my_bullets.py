@@ -25,10 +25,21 @@ class Bullet(Sprite):
         self.screen = alien_invasion.screen
         self.settings = alien_invasion.settings
         self.bullet_color = self.settings.bullet_color
-        self.rect = pygame.Rect(0, 0, self.settings.bullet_width, self.settings.bullet_height)
-        self.rect.midtop = alien_invasion.ship.ship_rectangle.midtop
-        self.bullet_y = float(self.rect.y)
+        self.bullet_rectangle = pygame.Rect(0, 0, self.settings.bullet_width, self.settings.bullet_height)
+        """
+        pygame.Rect: The rectangle that defines the bullet's hit box.
+        """
+        self.bullet_rectangle.midtop = alien_invasion.ship.ship_rectangle.midtop
+        self._bullet_y = float(self.bullet_rectangle.y)
+
+    @property
+    def bullet_y(self):
         """float: The y-coordinate of the player's bullet."""
+        return self._bullet_y
+
+    @bullet_y.setter
+    def bullet_y(self, new_bullet_height):
+        self._bullet_y = new_bullet_height
 
     def _get_bullet_rectangle_at_origin(self):
         """
@@ -55,7 +66,7 @@ class Bullet(Sprite):
         None
         """
         self.bullet_y -= self.settings.bullet_speed
-        self.rect.y = self.bullet_y
+        self.bullet_rectangle.y = self.bullet_y
 
     def draw_bullet(self):
         """
@@ -65,4 +76,4 @@ class Bullet(Sprite):
         -------
         None
         """
-        pygame.draw.rect(self.screen, self.bullet_color, self.rect)
+        pygame.draw.rect(self.screen, self.bullet_color, self.bullet_rectangle)
