@@ -19,6 +19,7 @@ class Ship:
         alien_invasion : chapter_12.my_game.my_alien_invasion.AlienInvasion
             The alien invasion game I want to add the ship to.
         """
+        self.ship_image_file_pathg = None
         self.screen = alien_invasion.screen
         """
         pygame.Surface: The screen to display the game on.
@@ -32,7 +33,7 @@ class Ship:
         pygame.Rect: The rectangle for the game window.
         """
         self._ship_image_file_path = 'images/background.png'
-        self.ship_image = pygame.image.load("images/background.png")
+        self.ship_image = pygame.image.load(self.ship_image_file_path)
         """
         pygame.Surface: The ship_image of the player's ship.
         """
@@ -109,7 +110,7 @@ class Ship:
         if self.moving_left and self.ship_rectangle.left > 0:
             self.ship_x -= self.ship_settings.ship_speed
 
-    def move_ship(self):
+    def update(self):
         """
         Move the ship left or right continuously until the player hits the edge of the screen.
 

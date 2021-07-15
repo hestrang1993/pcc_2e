@@ -6,6 +6,7 @@ import sys
 
 import pygame
 
+from chapter_12.my_game.my_bullets import Bullet
 from chapter_12.my_game.my_ship import Ship
 from chapter_12.my_game.settings import Settings
 
@@ -27,6 +28,10 @@ class AlienInvasion:
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption(self.caption_string)
         self.ship = Ship(self)
+        self.bullets = pygame.sprite.Group()
+        """
+        pygame.sprite.Group: The group of bullets fired by the player's ship.
+        """
 
     @property
     def caption_string(self):
@@ -35,12 +40,43 @@ class AlienInvasion:
         """
         return self._caption_string
 
+    def run_game(self):
+        """
+        Start the main loop for the game.
+
+        Returns
+        -------
+        None
+        """
+        while True:
+            self._check_events()
+            self.ship.update()
+            self._update_bullets_on_screen()
+            self._update_the_screen()
+
+    def _check_events(self):
+        """
+        Watch for keyboard and mouse events that will exit the game.
+
+        Returns
+        -------
+        None
+        """
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                self._check_key_down_events(event)
+            elif event.type == pygame.KEYUP:
+                self._check_key_up_events(event)
+
     def _check_key_down_events(self, event):
         """
-        Handle when the arrow keys and the Q key are pressed down.
+        Handle when the certain keys are pressed down.
 
         Pressing the arrow keys will move the player ship left or right.
         Pressing the Q key will quit the game.
+        Pressing the space bar will fire a bullet.
 
         Parameters
         ----------
@@ -57,6 +93,8 @@ class AlienInvasion:
             self.ship.moving_left = True
         elif event.key == pygame.K_q:
             sys.exit()
+        elif event.key == pygame.K_SPACE:
+            self._fire_bullet()
 
     def _check_key_up_events(self, event):
         """
@@ -78,21 +116,23 @@ class AlienInvasion:
         if event.key == pygame.K_LEFT:
             self.ship.moving_left = False
 
-    def _check_events(self):
+    def _fire_bullet(self):
         """
-        Watch for keyboard and mouse events that will exit the game.
+        Create a new bullet and add it to the bullet group.
 
         Returns
         -------
         None
         """
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                self._check_key_down_events(event)
-            elif event.type == pygame.KEYUP:
-                self._check_key_up_events(event)
+        if len(self.bullets) < self.settings.number_of_bullets_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
+
+    def _update_bullets_on_screen(self):
+        self.bullets.update()
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
 
     def _update_the_screen(self):
         """
@@ -104,20 +144,10 @@ class AlienInvasion:
         """
         self.screen.fill(self.settings.background_color)
         self.ship.blit_me()
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
         pygame.display.flip()
 
-    def run_game(self):
-        """
-        Start the main loop for the game.
-
-        Returns
-        -------
-        None
-        """
-        while True:
-            self._check_events()
-            self.ship.move_ship()
-            self._update_the_screen()
 
 
 def main():

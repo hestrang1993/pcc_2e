@@ -19,14 +19,12 @@ class Settings:
         )
         self._ship_speed = 1.5
         self._bullet_speed = 1.0
-        self._bullet_width = 4
-        self._bullet_height = 16
-        self._bullet_color_channel_value = 255
-        self._bullet_color = (
-                self.bullet_color_channel_value,
-                self._bullet_color_channel_value,
-                self.bullet_color_channel_value
-        )
+        self._bullet_width = 8
+        self._bullet_height = 32
+        self._bullet_color_channel_value = 250
+        self._bullet_color = (self.bullet_color_channel_value, self.bullet_color_channel_value,
+                              self.bullet_color_channel_value)
+        self._number_of_bullets_allowed = 3
 
     @property
     def screen_width(self):
@@ -74,7 +72,7 @@ class Settings:
     @property
     def bullet_width(self):
         """int: The pixel width of the player's bullets."""
-        return self._screen_width
+        return self._bullet_width
 
     @property
     def bullet_height(self):
@@ -90,3 +88,8 @@ class Settings:
     def bullet_color(self):
         """tuple[int, int, int]: The RGB coloring for the player's bullets."""
         return self._bullet_color
+
+    @property
+    def number_of_bullets_allowed(self):
+        """int: The total number of bullets allowed onscreen."""
+        return self._number_of_bullets_allowed
