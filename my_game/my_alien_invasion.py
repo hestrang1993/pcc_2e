@@ -155,6 +155,45 @@ class AlienInvasion:
         self.aliens.draw(self.screen)
         pygame.display.flip()
 
+    def _get_max_n_of_aliens_per_row(self, alien_instance):
+        """
+        Get the maximum number of aliens that can be added per row in the game window.
+
+        Parameters
+        ----------
+        alien_instance : my_game.my_alien.Alien
+            The alien NPC sprite.
+
+        Returns
+        -------
+        int
+            The maximum number of aliens allowed per row.
+        """
+        alien_width = alien_instance.rect.width
+        available_space_x = self.settings.screen_width - (2 * alien_width)
+        number_of_aliens_in_a_row = available_space_x // (2 * alien_width)
+        return number_of_aliens_in_a_row
+
+    def _add_aliens_to_row(self, number_of_aliens_per_row):
+        """
+        Add the max number of alien sprites allowed per row.
+
+        Parameters
+        ----------
+        number_of_aliens_per_row : int
+            The maximum number of aliens allowed per row.
+
+        Returns
+        -------
+        None
+        """
+        for i in range(number_of_aliens_per_row):
+            alien = Alien(self)
+            alien_width = alien.rect.width
+            alien.x = alien_width + 2 * alien_width * i
+            alien.rect.x = alien.x
+            self.aliens.add(alien)
+
     def _create_fleet(self):
         """
         Create a fleet of :class:`Alien` NPCs.
@@ -164,7 +203,8 @@ class AlienInvasion:
         None
         """
         alien = Alien(self)
-        self.aliens.add(alien)
+        number_of_aliens_per_row = self._get_max_n_of_aliens_per_row(alien)
+        self._add_aliens_to_row(number_of_aliens_per_row)
 
 
 def main():
