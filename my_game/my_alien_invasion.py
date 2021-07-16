@@ -6,9 +6,9 @@ import sys
 
 import pygame
 
-from chapter_12.my_game.my_bullets import Bullet
-from chapter_12.my_game.my_ship import Ship
-from chapter_12.my_game.settings import Settings
+from my_bullets import Bullet
+from my_ship import Ship
+from settings import Settings
 
 
 class AlienInvasion:
