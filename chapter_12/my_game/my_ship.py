@@ -32,7 +32,7 @@ class Ship:
         """
         pygame.Rect: The rectangle for the game window.
         """
-        self._ship_image_file_path = 'images/background.png'
+        self._ship_image_file_path = 'images/ship_resized.png'
         self.ship_image = pygame.image.load(self.ship_image_file_path)
         """
         pygame.Surface: The ship_image of the player's ship.
