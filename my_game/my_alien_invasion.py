@@ -6,6 +6,7 @@ import sys
 
 import pygame
 
+from my_alien import Alien
 from my_bullets import Bullet
 from my_ship import Ship
 from settings import Settings
@@ -32,6 +33,11 @@ class AlienInvasion:
         """
         pygame.sprite.Group: The group of bullets fired by the player's ship.
         """
+        self.aliens = pygame.sprite.Group()
+        """
+        pygame.sprite.Group: The group of alien NPC sprites.
+        """
+        self._create_fleet()
 
     @property
     def caption_string(self):
@@ -146,7 +152,19 @@ class AlienInvasion:
         self.ship.blit_me()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+        self.aliens.draw(self.screen)
         pygame.display.flip()
+
+    def _create_fleet(self):
+        """
+        Create a fleet of :class:`Alien` NPCs.
+
+        Returns
+        -------
+        None
+        """
+        alien = Alien(self)
+        self.aliens.add(alien)
 
 
 def main():
