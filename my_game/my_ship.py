@@ -19,7 +19,6 @@ class Ship:
         alien_invasion : chapter_12.my_game.my_alien_invasion.AlienInvasion
             The alien invasion game I want to add the ship to.
         """
-        self.ship_image_file_pathg = None
         self.screen = alien_invasion.screen
         """
         pygame.Surface: The screen to display the game on.
