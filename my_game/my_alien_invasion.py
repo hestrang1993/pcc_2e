@@ -6,9 +6,9 @@ import sys
 
 import pygame
 
-from my_alien_invasion.my_bullets import Bullet
-from my_alien_invasion.my_ship import Ship
-from my_alien_invasion.settings import Settings
+from my_bullets import Bullet
+from my_ship import Ship
+from settings import Settings
 
 
 class AlienInvasion:
@@ -147,7 +147,6 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         pygame.display.flip()
-
 
 
 def main():
