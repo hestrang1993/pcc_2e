@@ -135,6 +135,13 @@ class AlienInvasion:
             self.bullets.add(new_bullet)
 
     def _update_bullets_on_screen(self):
+        """
+        Keep track of how many bullets are on screen.
+
+        Returns
+        -------
+        None
+        """
         self.bullets.update()
         for bullet in self.bullets.copy():
             if bullet.bullet_rectangle.bottom <= 0:
@@ -174,12 +181,58 @@ class AlienInvasion:
         number_of_aliens_in_a_row = available_space_x // (2 * alien_width)
         return number_of_aliens_in_a_row
 
-    def _add_aliens_to_row(self, number_of_aliens_per_row):
+    def _get_max_n_of_rows_of_aliens(self, alien_instance):
+        """
+        Get the maximum number of rows of aliens that can be added in the game window.
+
+        Parameters
+        ----------
+        alien_instance : my_game.my_alien.Alien
+            The alien NPC sprite.
+
+        Returns
+        -------
+        int
+            The maximum number of rows of aliens to add to the game.
+        """
+        alien_height = alien_instance.rect.height
+        ship_height = self.ship.ship_rectangle.height
+        distance = (16 * alien_height) - ship_height
+        available_space_y = self.settings.screen_height - distance
+        number_of_rows_of_aliens = available_space_y // (2 * alien_height)
+        return number_of_rows_of_aliens
+
+    def _create_alien(self, column_number, row_number):
+        """
+        Create an alien that will spawn into a specific row and column into the game window.
+
+        Parameters
+        ----------
+        column_number : int
+            The column within a row to add the alien to.
+        row_number : int
+            The row to add the alien to.
+
+        Returns
+        -------
+        None
+        """
+        alien = Alien(self)
+        alien_width, alien_height = alien.rect.size
+        alien.x = alien_width + 2 * alien_width * column_number
+        alien.rect.x = alien.x
+        product = alien.rect.height * row_number
+        alien.rect.y = alien.rect.height + (2 * product)
+        self.aliens.add(alien)
+
+    def _add_aliens_to_row(self, number_of_rows, number_of_aliens_per_row):
         """
         Add the max number of alien sprites allowed per row.
 
         Parameters
         ----------
+        number_of_rows : int
+            The maximum number of rows of aliens.
         number_of_aliens_per_row : int
             The maximum number of aliens allowed per row.
 
@@ -187,12 +240,9 @@ class AlienInvasion:
         -------
         None
         """
-        for i in range(number_of_aliens_per_row):
-            alien = Alien(self)
-            alien_width = alien.rect.width
-            alien.x = alien_width + 2 * alien_width * i
-            alien.rect.x = alien.x
-            self.aliens.add(alien)
+        for row in range(number_of_rows):
+            for column in range(number_of_aliens_per_row):
+                self._create_alien(column, row)
 
     def _create_fleet(self):
         """
@@ -204,7 +254,8 @@ class AlienInvasion:
         """
         alien = Alien(self)
         number_of_aliens_per_row = self._get_max_n_of_aliens_per_row(alien)
-        self._add_aliens_to_row(number_of_aliens_per_row)
+        number_of_rows_of_aliens = self._get_max_n_of_rows_of_aliens(alien)
+        self._add_aliens_to_row(number_of_rows_of_aliens, number_of_aliens_per_row)
 
 
 def main():
