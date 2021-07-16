@@ -19,8 +19,8 @@ class Settings:
         )
         self._ship_speed = 1.5
         self._bullet_speed = 1.0
-        self._bullet_width = 8
-        self._bullet_height = 32
+        self._bullet_width = 4
+        self._bullet_height = 16
         self._bullet_color_channel_value = 250
         self._bullet_color = (self.bullet_color_channel_value, self.bullet_color_channel_value,
                               self.bullet_color_channel_value)
@@ -74,10 +74,18 @@ class Settings:
         """int: The pixel width of the player's bullets."""
         return self._bullet_width
 
+    @bullet_width.setter
+    def bullet_width(self, new_width):
+        self._bullet_width = new_width
+
     @property
     def bullet_height(self):
         """int: The pixel height of the player's bullets."""
         return self._bullet_height
+
+    @bullet_height.setter
+    def bullet_height(self, new_height):
+        self._bullet_height = new_height
 
     @property
     def bullet_color_channel_value(self):
