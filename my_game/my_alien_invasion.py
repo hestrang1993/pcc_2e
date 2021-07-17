@@ -58,6 +58,7 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self._update_bullets_on_screen()
+            self._update_aliens()
             self._update_the_screen()
 
     def _check_events(self):
@@ -146,6 +147,16 @@ class AlienInvasion:
         for bullet in self.bullets.copy():
             if bullet.bullet_rectangle.bottom <= 0:
                 self.bullets.remove(bullet)
+
+    def _update_aliens(self):
+        """
+        Update the position of all aliens in the fleet.
+
+        Returns
+        -------
+        None
+        """
+        self.aliens.update()
 
     def _update_the_screen(self):
         """
