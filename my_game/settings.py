@@ -25,6 +25,9 @@ class Settings:
         self._bullet_color = (self.bullet_color_channel_value, self.bullet_color_channel_value,
                               self.bullet_color_channel_value)
         self._number_of_bullets_allowed = 3
+        self._alien_speed = 1.0
+        self._fleet_drop_speed = 16
+        self._fleet_horizontal_direction = 1
 
     @property
     def screen_width(self):
@@ -101,3 +104,30 @@ class Settings:
     def number_of_bullets_allowed(self):
         """int: The total number of bullets allowed onscreen."""
         return self._number_of_bullets_allowed
+
+    @property
+    def alien_speed(self):
+        """float: The horizontal pixel speed of alien NPC sprites."""
+        return self._alien_speed
+
+    @property
+    def fleet_drop_speed(self):
+        """int: The vertical speed of the alien fleet."""
+        return self._fleet_drop_speed
+
+    @property
+    def fleet_horizontal_direction(self):
+        """
+        int: A flag for the horizontal direction of the fleet.
+
+        Notes
+        -----
+        Can be either ``1`` or ``-1``:
+                * If ``1``, the fleet goes right.
+                * If ``-1``, the fleet goes left.
+        """
+        return self._fleet_horizontal_direction
+
+    @fleet_horizontal_direction.setter
+    def fleet_horizontal_direction(self, new_fleet_direction):
+        self._fleet_horizontal_direction = new_fleet_direction
